@@ -12,6 +12,7 @@ public class SharedQueue {
 
     public synchronized void addPrintJob(PrintJob job) {
         while (queue.size() == size) {
+            // wait for the queue to have space
             try {
                 queue.wait();
             } catch (InterruptedException e) {
@@ -23,6 +24,7 @@ public class SharedQueue {
 
     public synchronized PrintJob getPrintJob() {
         while (queue.isEmpty()) {
+            // wait for the queue to have a job
             try {
                 queue.wait();
             } catch (InterruptedException e) {
