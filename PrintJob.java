@@ -1,12 +1,13 @@
+import java.nio.file.Path;
+
 public class PrintJob {
-
-    private String fpath;
-
-    public PrintJob(String fpath) {
-        this.fpath = fpath;
+    private Path filePath;
+    
+    public PrintJob(Path filePath) {
+        this.filePath = filePath;
     }
 
-    public String getFpath() {
-        return fpath;
+    public Path getFilePath() {
+        return filePath;
     }
 }

@@ -9,13 +9,16 @@ class TypenotSupportedException extends Exception {
 public class Computer extends Thread{
     private Path filePath;
     private String fileType;
+    private SharedQueue sharedQueue;
 
-    public Computer(Path filePath) {
+    public Computer(Path filePath,SharedQueue sharedQueue) {
         this.filePath = filePath;
+        this.sharedQueue = sharedQueue;
     }
 
     private String getFileType() {
         String fileName = filePath.getFileName().toString();
+        System.out.println(fileName);
         String[] parts = fileName.split("\\.");
         return parts[parts.length - 1];
     }
@@ -25,7 +28,8 @@ public class Computer extends Thread{
         try {
             fileType = getFileType();
             if (fileType.equals("txt")) {
-
+                PrintJob printJob = new PrintJob(filePath);
+                sharedQueue.addPrintJob(printJob);
             } else {
                 throw new TypenotSupportedException("Unsupported file type: " + fileType);
             }

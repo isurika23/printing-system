@@ -4,12 +4,14 @@ import java.io.IOException;
 
 public class Printer implements Runnable{
     private String file;
+    private SharedQueue sharedQueue;
 
-    public Printer(String file){
+    public Printer(String file, SharedQueue sharedQueue){
         this.file = file;
+        this.sharedQueue = sharedQueue;
     }
 
-    private void readFile(){
+    private void readAFile(PrintJob job){
         System.out.println("Reading file");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -22,15 +24,20 @@ public class Printer implements Runnable{
         }
     }
 
+    // private void print(){
+    //     this.readAFile();
+    //     System.out.println("Printing");
+    //     try {
+    //         Thread.sleep(5000);
+    //     } catch (InterruptedException e) {
+    //         e.printStackTrace();
+    //     }
+    //     System.out.println("Printed");
+    // }
+
     private void print(){
-        this.readFile();
-        System.out.println("Printing");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Printed");
+        PrintJob job = sharedQueue.getPrintJob();
+
     }
 
     @Override
@@ -38,6 +45,5 @@ public class Printer implements Runnable{
         while (true) {
             this.print();
         }
-    }
-    
+    }    
 }
