@@ -19,7 +19,7 @@ public class Printer extends Thread{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Reading file");
+        System.out.println("Reading file : " + job.getFileName());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(job.getFilePath()))) {
             String line;

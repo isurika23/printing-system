@@ -9,4 +9,9 @@ public class PrintJob {
     public String getFilePath() {
         return filePath;
     }
+
+    public String getFileName() {
+        String[] fileParts = this.filePath.split("/");
+        return fileParts[fileParts.length - 1];
+    }
 }
