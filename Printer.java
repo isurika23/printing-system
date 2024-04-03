@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Printer implements Runnable{
+public class Printer extends Thread{
     private SharedQueue sharedQueue;
 
     public Printer(SharedQueue sharedQueue){
