@@ -20,6 +20,7 @@ public class SharedQueue {
             }
         }
         queue.add(job);
+        queue.notifyAll();
     }
 
     public synchronized PrintJob getPrintJob() {
@@ -32,6 +33,7 @@ public class SharedQueue {
             }
         }
         PrintJob job = queue.poll();
+        queue.notifyAll();
         return job;
     }
 }
