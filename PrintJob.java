@@ -1,13 +1,12 @@
-import java.nio.file.Path;
-
+// Create an object to represent a print job
 public class PrintJob {
-    private Path filePath;
+    private String filePath;
     
-    public PrintJob(Path filePath) {
-        this.filePath = filePath;
+    public PrintJob(String filePath) {
+        this.filePath = filePath;   
     }
 
-    public Path getFilePath() {
+    public String getFilePath() {
         return filePath;
     }
 }

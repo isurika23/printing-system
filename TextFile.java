@@ -1,3 +1,4 @@
+// Class that represents a text file
 public class TextFile {
     private String text;
 

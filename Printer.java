@@ -4,15 +4,24 @@ import java.io.IOException;
 
 public class Printer extends Thread{
     private SharedQueue sharedQueue;
+    private String printerName;
 
-    public Printer(SharedQueue sharedQueue){
+    public Printer(SharedQueue sharedQueue,String printerName) {
+        // initialize the shared queue and printer name
         this.sharedQueue = sharedQueue;
+        this.printerName = printerName;
     }
 
     private TextFile readAFile(PrintJob job){
+        // read the file
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("Reading file");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("file"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(job.getFilePath()))) {
             String line;
             String content = "";
             while ((line = reader.readLine()) != null) {
@@ -22,30 +31,33 @@ public class Printer extends Thread{
             TextFile textObject = new TextFile(content);
 
             return textObject;
-        } 
+        }
+        // Handle potential exceptions 
         catch (IOException e) {
-            e.printStackTrace(); // Handle a potential exception
+            e.printStackTrace();
         }
 
         return null;
     }
 
     private void print(TextFile textObject){
-        System.out.println("Printing \n");
+        // print the file
+        System.out.println("Printing from : " + this.printerName);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         System.out.println(textObject.getText());          
 
-        System.out.println("\nPrinted");
+        System.out.println("\nPrinted successfully from : " + this.printerName);
     }
 
     @Override
     public void run() {
+        // run the printer
         while (true) {
             PrintJob job = sharedQueue.getPrintJob();
             TextFile textObject = this.readAFile(job);

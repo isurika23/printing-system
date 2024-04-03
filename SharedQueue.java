@@ -14,26 +14,26 @@ public class SharedQueue {
         while (queue.size() == size) {
             // wait for the queue to have space
             try {
-                queue.wait();
+                wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         queue.add(job);
-        queue.notifyAll();
+        notifyAll();
     }
 
     public synchronized PrintJob getPrintJob() {
-        while (queue.isEmpty()) {
-            // wait for the queue to have a job
-            try {
-                queue.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (queue.isEmpty()) {
+                // wait for the queue to have a job
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
         PrintJob job = queue.poll();
-        queue.notifyAll();
+        notifyAll();
         return job;
     }
 }
